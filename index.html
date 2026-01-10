@@ -24,18 +24,18 @@ body{
 }
 
 /* Header */
-header{position:fixed;top:0;left:0;right:0;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;z-index:100;transition:opacity .4s;}
+header{position:fixed;top:0;left:0;right:0;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;transition:opacity .4s;background:rgba(246,242,229,0.94);backdrop-filter:blur(10px);}
 header.hidden{opacity:0;pointer-events:none;}
-.logo{font-size:15px;font-weight:600;}
-nav{display:flex;gap:24px;flex-wrap:wrap;}
-nav a{text-decoration:none;color:inherit;font-size:14px;cursor:pointer;}
+.logo{font-size:15px;font-weight:600;white-space:nowrap;}
+nav{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end;}
+nav a{text-decoration:none;color:inherit;font-size:14px;cursor:pointer;transition:color .3s;}
 nav a:hover{color:var(--orange);}
 
 /* Hero */
 #hero{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;transition:opacity .7s ease;}
 #canvas{position:absolute;inset:0;}
-.hero-content{text-align:center;z-index:2;}
-.tagline{font-size:18px;line-height:1.6;max-width:420px;}
+.hero-content{text-align:center;z-index:2;padding:0 30px;max-width:90vw;}
+.tagline{font-size:clamp(16px,4.2vw,18px);line-height:1.65;}
 .word1{color:var(--purple);}
 .word2{color:var(--green);}
 .word3{color:var(--orange);}
@@ -45,119 +45,73 @@ nav a:hover{color:var(--orange);}
 @keyframes scroll{from{opacity:1;top:8px;}to{opacity:0;top:24px;}}
 
 /* About */
-#about{margin-top:100vh;padding:140px 40px 100px;position:relative;z-index:10;transition:opacity 1s ease;}
+#about{margin-top:100vh;padding:140px 20px 100px;position:relative;z-index:10;transition:opacity 1s ease;}
 #about.fade-out{opacity:0.1;}
-.about-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:40% 60%;gap:60px;}
+.about-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:50px;}
+@media (min-width:860px){.about-grid{grid-template-columns:40% 60%;gap:60px;}}
 .about-image{height:420px;overflow:hidden;border-radius:12px;}
-.about-image img{width:100%;height:100%;object-fit:cover;object-position:50% 0;} /* 從上方開始顯示 */
-.about-text h2{font-size:42px;margin-bottom:30px;color:var(--purple);font-weight:400;}
-.about-item{font-size:16px;line-height:1.75;margin-bottom:22px;}
+.about-image img{width:100%;height:100%;object-fit:cover;object-position:50% 0;}
+.about-text h2{font-size:clamp(32px,7vw,42px);margin-bottom:30px;color:var(--purple);font-weight:400;}
+.about-item{font-size:16px;line-height:1.8;margin-bottom:22px;}
+
+/* Stats */
+.stats{margin:80px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:30px;max-width:1000px;}
+.stat{text-align:center;padding:40px 20px;background:rgba(255,255,255,.45);border-radius:12px;}
+.stat-num{font-size:clamp(38px,10vw,52px);color:var(--purple);margin-bottom:14px;}
+.stat-label{font-size:13px;letter-spacing:.15em;text-transform:uppercase;opacity:.7;}
 
 /* Offers */
-#offers{padding:140px 40px;background:linear-gradient(to top,rgba(246,242,229,0.9),var(--bg));position:relative;}
-#offers h2{
-  font-size:38px;
-  color:var(--purple);
-  margin:0 auto 60px;
-  text-align:center;
-  font-weight:400;
-  position:relative;
-  width:fit-content;
-  display:block;
-  z-index:2;
-}
-.offer-title-deco{
-  position:absolute;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:600px;
-  height:50px;
-  pointer-events:none;
-  z-index:1;
-}
-.offer-grass{
-  position:absolute;
-  bottom:-10px;
-  left:0;right:0;
-  height:70px;
-  display:flex;
-  justify-content:space-around;
-  align-items:flex-end;
-  opacity:0.45;
-}
-.grass-stem{
-  width:2.5px;
-  height:40px;
-  background:rgba(62,56,50,0.3);
-  border-radius:2px;
-  transform-origin:bottom;
-  animation:gentleSway 10s infinite ease-in-out alternate;
-}
+#offers{padding:140px 20px;background:linear-gradient(to top,rgba(246,242,229,0.9),var(--bg));position:relative;}
+#offers h2{font-size:clamp(30px,8vw,38px);color:var(--purple);margin:0 auto 60px;text-align:center;font-weight:400;position:relative;width:fit-content;z-index:2;}
+.offer-title-deco{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:600px;height:50px;pointer-events:none;z-index:1;}
+.offer-grass{position:absolute;bottom:-10px;left:0;right:0;height:70px;display:flex;justify-content:space-around;align-items:flex-end;opacity:0.45;}
+.grass-stem{width:2.5px;height:40px;background:rgba(62,56,50,0.3);border-radius:2px;transform-origin:bottom;animation:gentleSway 10s infinite ease-in-out alternate;}
 .grass-stem:nth-child(odd){animation-delay:2s;}
 .grass-stem:nth-child(3n){height:48px;}
-.grass-flower{
-  position:absolute;
-  bottom:38px;
-  left:50%;
-  transform:translateX(-50%);
-  width:9px;
-  height:9px;
-  background:var(--green);
-  border-radius:50%;
-  box-shadow:0 0 5px rgba(44,100,105,0.3);
-  opacity:0.7;
-}
+.grass-flower{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);width:9px;height:9px;background:var(--green);border-radius:50%;box-shadow:0 0 5px rgba(44,100,105,0.3);opacity:0.7;}
 .grass-stem:nth-child(2n) .grass-flower{background:#c1d7ae;}
 .grass-stem:nth-child(4n) .grass-flower{background:#e08f62;}
 @keyframes gentleSway{0%{transform:rotate(-2deg);}100%{transform:rotate(2deg);}}
-/* Offer slider */
-.offer-slider{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 20vw;margin:0 -20vw;}
-.offer-slider::-webkit-scrollbar{display:none;}
-.offer-track{display:flex;gap:40px;padding:30px 0;justify-content:center;}
-.offer-card{flex:0 0 360px;background:rgba(255,255,255,0.6);border-radius:16px;overflow:hidden;box-shadow:0 12px 32px rgba(0,0,0,0.1);transition:all .4s ease;scroll-snap-align:center;}
-.offer-card:hover{transform:translateY(-16px);box-shadow:0 24px 60px rgba(178,1,85,0.18);}
-.offer-card img{width:100%;height:240px;object-fit:cover;object-position:50% 0;} /* 從圖片最上方開始顯示 */
-.offer-info{padding:28px;font-size:15px;line-height:1.65;}
 
-/* Stats */
-.stats{margin:80px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:1000px;}
-.stat{text-align:center;padding:40px 20px;background:rgba(255,255,255,.45);border-radius:12px;}
-.stat-num{font-size:52px;color:var(--purple);margin-bottom:14px;}
-.stat-label{font-size:13px;letter-spacing:.15em;text-transform:uppercase;opacity:.7;}
+.offer-slider{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 10vw;margin:0 -10vw;display:flex;justify-content:center;}
+.offer-slider::-webkit-scrollbar{display:none;}
+.offer-track{display:flex;gap:40px;padding:30px 0;min-width:100%;justify-content:center;}
+.offer-card{flex:0 0 320px;background:rgba(255,255,255,0.6);border-radius:16px;overflow:hidden;box-shadow:0 12px 32px rgba(0,0,0,0.1);transition:all .4s ease;scroll-snap-align:center;}
+@media (min-width:480px){.offer-card{flex:0 0 340px;}}
+@media (min-width:768px){.offer-card{flex:0 0 360px;}}
+.offer-card:hover{transform:translateY(-16px);box-shadow:0 24px 60px rgba(178,1,85,0.18);}
+.offer-card img{width:100%;height:240px;object-fit:cover;object-position:50% 0;}
+.offer-info{padding:28px;font-size:15px;line-height:1.65;}
 
 /* Modal */
 .service-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:999;}
 .service-modal.active{display:flex;}
 .service-overlay{position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);}
-.service-panel{position:relative;width:min(1200px,94%);background:var(--bg);padding:80px 90px;box-shadow:0 30px 100px rgba(0,0,0,.28);border-radius:16px;max-height:90vh;overflow-y:auto;scrollbar-width:none;opacity:0;transform:translateY(60px);animation:modalFadeIn .9s forwards cubic-bezier(0.25,0.8,0.25,1);}
+.service-panel{position:relative;width:min(94%,1200px);background:var(--bg);padding:clamp(50px,9vw,80px) clamp(25px,7vw,90px);box-shadow:0 30px 100px rgba(0,0,0,.28);border-radius:16px;max-height:90vh;overflow-y:auto;scrollbar-width:none;opacity:0;transform:translateY(60px);animation:modalFadeIn .9s forwards cubic-bezier(0.25,0.8,0.25,1);}
 .service-panel::-webkit-scrollbar{display:none;}
+#contactModal .service-panel{width:min(94%,500px);padding:clamp(60px,12vw,80px) clamp(30px,9vw,50px);text-align:center;}
 @keyframes modalFadeIn{0%{opacity:0;transform:translateY(60px) scale(0.96);}100%{opacity:1;transform:translateY(0) scale(1);}}
-.service-close{position:absolute;top:32px;right:36px;background:none;border:none;font-size:38px;cursor:pointer;color:var(--text);transition:color .3s;}
+.service-close{position:absolute;top:24px;right:28px;background:none;border:none;font-size:38px;cursor:pointer;color:var(--text);transition:color .3s;}
 .service-close:hover{color:var(--orange);}
-.service-panel h2{font-size:42px;margin-bottom:8px;color:var(--purple);font-weight:400;}
-.service-subtitle{font-size:15px;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:40px;color:var(--green);}
-.service-section{margin-bottom:60px;}
-.service-section h3{font-size:28px;margin:40px 0 20px;color:var(--orange);font-weight:400;}
-.service-section h4{font-size:22px;margin:32px 0 16px;color:var(--purple);font-weight:400;}
-.service-section ul{list-style:none;font-size:17px;line-height:1.8;}
-.service-section li{position:relative;padding-left:28px;margin-bottom:10px;}
+.service-panel h2{font-size:clamp(32px,8vw,42px);color:var(--purple);margin-bottom:12px;}
+.service-panel .service-subtitle{font-size:15px;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin:0 0 40px;color:var(--green);}
+.service-section{margin-bottom:70px;}
+.service-section h3{font-size:clamp(24px,6vw,28px);color:var(--orange);margin:40px 0 20px;}
+.service-section h4{font-size:clamp(20px,5vw,22px);color:var(--purple);margin:32px 0 16px;}
+.service-section ul{list-style:none;font-size:16.5px;line-height:1.9;}
+.service-section li{position:relative;padding-left:28px;margin-bottom:14px;}
 .service-section li::before{content:"→";position:absolute;left:0;color:var(--purple);font-weight:bold;}
-.price-item{font-size:18px;margin:12px 0;}
+.price-item{font-size:17px;margin:14px 0;}
 .price-highlight{color:var(--purple);font-weight:bold;}
-.sample-placeholder{margin-top:36px;}
+.sample-placeholder{margin-top:40px;}
 .sample-placeholder img{max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.faq-item{margin:32px 0;}
+.faq-q{font-weight:bold;color:var(--purple);margin-bottom:12px;font-size:17px;}
+.contact-item{font-size:18px;margin:28px 0;display:flex;align-items:center;gap:12px;justify-content:center;}
+.contact-label{font-weight:bold;color:var(--orange);min-width:90px;text-align:right;}
 
-.faq-item{margin:28px 0;}
-.faq-q{font-weight:bold;color:var(--purple);margin-bottom:8px;}
-
-#contactModal .service-panel{width:min(500px,90%);padding:70px 50px;text-align:center;}
-.contact-title{font-size:32px;color:var(--purple);margin-bottom:30px;}
-.contact-item{font-size:18px;margin:20px 0;}
-.contact-label{font-weight:bold;color:var(--orange);}
-
-footer{text-align:center;font-size:12px;padding:60px 0 100px;opacity:.6;}
+/* Footer */
+footer{text-align:center;font-size:12px;padding:60px 20px 100px;opacity:.6;}
 </style>
 </head>
 <body>
@@ -208,7 +162,6 @@ footer{text-align:center;font-size:12px;padding:60px 0 100px;opacity:.6;}
 
 <section id="offers">
   <h2>Offer Cases</h2>
-  <!-- 融合式小草花：貼合標題下半部分 -->
   <div class="offer-title-deco">
     <div class="offer-grass">
       <div class="grass-stem" style="height:32px;"><div class="grass-flower" style="bottom:32px;background:#c1d7ae;opacity:0.7;"></div></div>
@@ -262,13 +215,35 @@ footer{text-align:center;font-size:12px;padding:60px 0 100px;opacity:.6;}
   <div class="service-panel">
     <button class="service-close">×</button>
     <h2 class="contact-title">Contact Me</h2>
-    <div class="contact-item"><div class="contact-label">E-Mail</div>littlepo_office@163.com</div>
-    <div class="contact-item"><div class="contact-label">WeChat</div>PiousBelieverinLove</div>
+    <div class="contact-item"><span class="contact-label">E-Mail</span>littlepo_office@163.com</div>
+    <div class="contact-item"><span class="contact-label">WeChat</span>PiousBelieverinLove</div>
   </div>
 </div>
 
 <script>
-// Hero fade + About fade
+// Canvas 動畫完整版
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let W, H;
+function resize() {W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight;}
+resize();
+window.addEventListener("resize", resize);
+
+const palettes = [["#e8b4b8","#d77a61"],["#f1c27d","#e08f62"],["#c1d7ae","#7fa99b"],["#f4a261","#e76f51"],["#b7b7e1","#6d597a"]];
+
+class Drop{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=Math.random()*-H*1.5;this.len=4+Math.random()*10;this.speed=2.2+Math.random()*3.8;this.alpha=.18+Math.random()*.18;}update(){this.y+=this.speed;if(this.y>H-18){for(let i=0;i<4+Math.random()*3;i++){splashes.push(new Splash(this.x,H-12));}this.reset();}}draw(){ctx.strokeStyle=`rgba(62,56,50,${this.alpha})`;ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x,this.y+this.len);ctx.stroke();}}
+class Splash{constructor(x,y){this.x=x;this.y=y;this.radius=1.5+Math.random()*2;this.vx=(Math.random()-0.5)*2.2;this.vy=-(1.2+Math.random()*2.2);this.alpha=0.75;this.life=0;this.maxLife=55+Math.random()*35;const pal=palettes[Math.floor(Math.random()*palettes.length)];this.color=pal[Math.floor(Math.random()*2)]+'aa';}update(){this.x+=this.vx;this.y+=this.vy;this.vy+=0.08;this.alpha-=0.012;this.life++;this.radius*=0.985;}draw(){ctx.globalAlpha=this.alpha;ctx.fillStyle=this.color;ctx.beginPath();ctx.arc(this.x,this.y,Math.max(0.4,this.radius),0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;}}
+const drops=Array.from({length:60},()=>new Drop());const splashes=[];
+
+let mouse={x:-9999,y:-9999};window.addEventListener("mousemove",e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+
+class Grass{constructor(x,delay){this.x=x;this.baseY=H;this.h=0;this.maxH=30+Math.random()*50;this.grow=.12+Math.random()*.18;this.delay=delay;this.phase=Math.random()*Math.PI*2;this.hasFlower=Math.random()>.5;}update(t){if(t<this.delay)return;if(this.h<this.maxH)this.h+=this.grow;const dx=mouse.x-this.x;const dist=Math.abs(dx);this.wind=Math.max(0,1-dist/180)*dx*.15;}draw(t){if(this.h<2)return;ctx.strokeStyle="rgba(62,56,50,.55)";ctx.lineWidth=1;ctx.beginPath();let tipX,tipY;const seg=8;for(let i=0;i<=seg;i++){const p=i/seg;const sway=Math.sin(t*.01+this.phase+p*2.2)*3+(this.wind||0)*p*p;const x=this.x+sway;const y=this.baseY-this.h*p;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);if(i===seg){tipX=x;tipY=y;}}ctx.stroke();if(this.hasFlower&&this.h>this.maxH*.8)this.drawFlower(tipX,tipY,t);}drawFlower(x,y,t){const palette=palettes[Math.floor(this.phase*10)%palettes.length];const size=2.5+this.h*.02;const petals=5+Math.floor((this.phase*100)%3);const wobble=Math.sin(t*.05+this.phase)*.35;for(let i=0;i<petals;i++){const a=i/petals*Math.PI*2+wobble;ctx.fillStyle=palette[0];ctx.beginPath();ctx.ellipse(x+Math.cos(a)*size*.9,y+Math.sin(a)*size*.9,size*.55,size,a,0,Math.PI*2);ctx.fill();}ctx.fillStyle=palette[1];ctx.beginPath();ctx.arc(x,y,size*.4,0,Math.PI*2);ctx.fill();}}
+const grasses=Array.from({length:120},()=>new Grass(Math.random()*W,Math.random()*300));
+
+let time=0;
+function animate(){ctx.clearRect(0,0,W,H);drops.forEach(d=>{d.update();d.draw();});for(let i=splashes.length-1;i>=0;i--){const s=splashes[i];s.update();s.draw();if(s.life>s.maxLife||s.alpha<=0.03)splashes.splice(i,1);}grasses.forEach(g=>{g.update(time);g.draw(time);});time++;requestAnimationFrame(animate);}animate();
+
+// Scroll fade
 const hero = document.getElementById("hero");
 const header = document.getElementById("header");
 const about = document.getElementById("about");
@@ -289,28 +264,7 @@ window.addEventListener("scroll", () => {
   about.classList.toggle("fade-out", y > 900);
 });
 
-// Canvas animation - 完整恢復原始雨點 + 小草花
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-let W, H;
-function resize() {W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight;}
-resize();
-window.addEventListener("resize", resize);
-
-const palettes = [["#e8b4b8","#d77a61"],["#f1c27d","#e08f62"],["#c1d7ae","#7fa99b"],["#f4a261","#e76f51"],["#b7b7e1","#6d597a"]];
-
-class Drop{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=Math.random()*-H*1.5;this.len=4+Math.random()*10;this.speed=2.2+Math.random()*3.8;this.alpha=.18+Math.random()*.18;}update(){this.y+=this.speed;if(this.y>H-18){for(let i=0;i<4+Math.random()*3;i++){splashes.push(new Splash(this.x,H-12));}this.reset();}}draw(){ctx.strokeStyle=`rgba(62,56,50,${this.alpha})`;ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x,this.y+this.len);ctx.stroke();}}
-class Splash{constructor(x,y){this.x=x;this.y=y;this.radius=1.5+Math.random()*2;this.vx=(Math.random()-0.5)*2.2;this.vy=-(1.2+Math.random()*2.2);this.alpha=0.75;this.life=0;this.maxLife=55+Math.random()*35;const pal=palettes[Math.floor(Math.random()*palettes.length)];this.color=pal[Math.floor(Math.random()*2)]+'aa';}update(){this.x+=this.vx;this.y+=this.vy;this.vy+=0.08;this.alpha-=0.012;this.life++;this.radius*=0.985;}draw(){ctx.globalAlpha=this.alpha;ctx.fillStyle=this.color;ctx.beginPath();ctx.arc(this.x,this.y,Math.max(0.4,this.radius),0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;}}
-const drops=Array.from({length:60},()=>new Drop());const splashes=[];
-
-let mouse={x:-9999,y:-9999};window.addEventListener("mousemove",e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
-
-class Grass{constructor(x,delay){this.x=x;this.baseY=H;this.h=0;this.maxH=30+Math.random()*50;this.grow=.12+Math.random()*.18;this.delay=delay;this.phase=Math.random()*Math.PI*2;this.hasFlower=Math.random()>.5;}update(t){if(t<this.delay)return;if(this.h<this.maxH)this.h+=this.grow;const dx=mouse.x-this.x;const dist=Math.abs(dx);this.wind=Math.max(0,1-dist/180)*dx*.15;}draw(t){if(this.h<2)return;ctx.strokeStyle="rgba(62,56,50,.55)";ctx.lineWidth=1;ctx.beginPath();let tipX,tipY;const seg=8;for(let i=0;i<=seg;i++){const p=i/seg;const sway=Math.sin(t*.01+this.phase+p*2.2)*3+(this.wind||0)*p*p;const x=this.x+sway;const y=this.baseY-this.h*p;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);if(i===seg){tipX=x;tipY=y;}}ctx.stroke();if(this.hasFlower&&this.h>this.maxH*.8)this.drawFlower(tipX,tipY,t);}drawFlower(x,y,t){const palette=palettes[Math.floor(this.phase*10)%palettes.length];const size=2.5+this.h*.02;const petals=5+Math.floor((this.phase*100)%3);const wobble=Math.sin(t*.05+this.phase)*.35;for(let i=0;i<petals;i++){const a=i/petals*Math.PI*2+wobble;ctx.fillStyle=palette[0];ctx.beginPath();ctx.ellipse(x+Math.cos(a)*size*.9,y+Math.sin(a)*size*.9,size*.55,size,a,0,Math.PI*2);ctx.fill();}ctx.fillStyle=palette[1];ctx.beginPath();ctx.arc(x,y,size*.4,0,Math.PI*2);ctx.fill();}}
-const grasses=Array.from({length:120},()=>new Grass(Math.random()*W,Math.random()*300));
-
-let time=0;function animate(){ctx.clearRect(0,0,W,H);drops.forEach(d=>{d.update();d.draw();});for(let i=splashes.length-1;i>=0;i--){const s=splashes[i];s.update();s.draw();if(s.life>s.maxLife||s.alpha<=0.03)splashes.splice(i,1);}grasses.forEach(g=>{g.update(time);g.draw(time);});time++;requestAnimationFrame(animate);}animate();
-
-// Modal Content
+// SERVICE_CONTENT 完整
 const SERVICE_CONTENT = {
   school:`<h2>School Selection</h2><div class="service-subtitle">Positioning before application</div><div class="service-section"><h3>Service Procedure</h3><ul><li>Confirm application areas & number of schools</li><li>Payment</li><li>Fill personal info in shared doc (schools applied, GPA, internship, awards, etc.)</li><li>Compare with past students' backgrounds for each target school & produce comparison table</li><li>Student reviews and confirms the proposed list</li><li>Follow-up guidance & adjustment if needed</li></ul></div><div class="service-section"><h3>Price</h3><div class="price-highlight">¥ 200 per major</div></div><div class="service-section"><h3>Sample Case</h3><p>Example of previous students' school selection comparison tables:</p><div class="sample-placeholder"><img src="sample_school_selection_table.jpg" alt="School Selection Comparison Table Example"></div></div>`,
 
@@ -320,7 +274,18 @@ const SERVICE_CONTENT = {
 
   interview:`<h2>Interview Guidance</h2><div class="service-subtitle">Preparation for success</div><div class="service-section"><h3>Mock Interview</h3><ul><li>Confirm your major and interview schedule</li><li>Collect and analyze student documents and application materials</li><li>Design targeted interview question list based on previous students' real experience</li><li>Conduct mock interview practice</li><li>Provide real-time feedback and suggestions</li><li>Strengthen weak points</li><li>Analyze potential follow-up and stress questions</li><li>Summarize improvement strategies</li></ul></div><div class="service-section"><h3>Interview Set</h3><ul><li>The interview set combines Chinese and English, organizing potential questions and detailed explanations based on past successful students;</li><li>Each set is tailored to different schools and majors, allowing focused practice;</li><li>You can practice each question step by step, refer to the explanations, and optimize your expression and logic.</li></ul></div><div class="service-section"><h3>Price</h3><div class="price-item">• Mock Interview: <span class="price-highlight">¥300/h</span></div><div class="price-item">• Interview Set: <span class="price-highlight">¥1200/set</span></div></div><div class="service-section"><h3>Sample Case</h3><p>Examples from previous students' interview sets:</p><div class="sample-placeholder"><img src="sample_interview_questions.jpg" alt="Interview Question Set Example"></div></div>`,
 
-  faq:`<h2>Frequently Asked Questions</h2><div class="service-subtitle">Everything you need to know</div><div class="service-section"><!-- 原 FAQ 內容保持不變 --></div>`,
+  faq:`<h2>Frequently Asked Questions</h2><div class="service-subtitle">Everything you need to know</div><div class="service-section">
+    <div class="faq-item"><div class="faq-q">1. How can I contact you?</div>You may reach me via the email or WeChat provided on the homepage, and I will reply within 24 hours.</div>
+    <div class="faq-item"><div class="faq-q">2. What is the service process?</div>We will first conduct an initial consultation. Once requirements are clear, a tailored plan will be designed. After confirmation and payment, I will provide full-process support.</div>
+    <div class="faq-item"><div class="faq-q">3. How long is the service cycle?</div>Depending on the number of applications or writing needs, the cycle may range from 7 days to 10 months.</div>
+    <div class="faq-item"><div class="faq-q">4. Do you provide follow-up support?</div>Yes. I will provide long-term support and Q&A after the service ends to ensure your peace of mind.</div>
+    <div class="faq-item"><div class="faq-q">5. Can the fee be paid in installments?</div>Sorry, services only support one-time payment.</div>
+    <div class="faq-item"><div class="faq-q">6. What are the payment methods?</div>WeChat, Alipay, and bank transfer are accepted.</div>
+    <div class="faq-item"><div class="faq-q">7. Will we sign a contract?</div>Yes, all services will be governed by a formal contract to ensure transparency and mutual obligations.</div>
+    <div class="faq-item"><div class="faq-q">8. Can I get a refund if I cancel midway?</div>If canceled before the service officially begins, a partial refund is possible. Once started, refunds are not supported.</div>
+    <div class="faq-item"><div class="faq-q">9. Can the plan be revised if I am not satisfied?</div>Yes, you may express your concerns. After friendly discussion, revisions can be made.</div>
+    <div class="faq-item"><div class="faq-q">10. Will my personal information be protected?</div>Absolutely. All personal information will be strictly confidential, used only for necessary service steps, and never shared with third parties.</div>
+  </div>`,
 
   contact:''
 };
