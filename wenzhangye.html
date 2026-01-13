@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Industry Insights | Jinglan Overseas Education Studio</title>
+
+    <style>
+        :root {
+            --side-padding: 5vw;
+            --gutter: 4vw;
+            --text: #000;
+            --orange: #df6536;
+            --purple: #b20155;
+            --gray: #555;
+            --bg: #f6f2e5;
+            --green: #2c6469;
+            --header-height: 54px;   /* 新增变量，方便统一调整 */
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="6" fill="%23c1d7ae" opacity="0.7"/><circle cx="16" cy="16" r="3" fill="%237fa99b"/></svg>') 16 16, auto;
+        }
+
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--header-height);
+            padding: 0 5vw;
+            z-index: 200;
+            background: rgba(246,242,229,0.94);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: -0.4px;
+        }
+
+        .logo {
+            white-space: nowrap;
+        }
+
+        /* ── Mobile top nav ── */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: var(--header-height);   /* 关键修复：紧贴 header 下方 */
+            left: 0; right: 0;
+            height: 54px;
+            z-index: 195;
+            background: rgba(246,242,229,0.94);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            display: flex;
+            height: 100%;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 0.96rem;
+            font-weight: 500;
+        }
+
+        .mobile-nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.6rem 0.9rem;
+        }
+
+        .mobile-nav a.active,
+        .mobile-nav a:hover {
+            color: var(--orange);
+        }
+
+        main {
+            padding-top: calc(var(--header-height) + 56px);  /* 默认桌面：只算 header */
+            display: grid;
+            grid-template-columns: 1fr minmax(0, 1200px) 1fr;
+        }
+
+        .sidebar {
+            grid-column: 2 / 3;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--gutter);
+            padding: 0 var(--side-padding);
+        }
+
+        .category-nav {
+            position: sticky;
+            top: 8rem;
+            height: fit-content;
+            display: block;
+        }
+
+        .category-nav ul { list-style: none; }
+        .category-nav li { margin-bottom: 1.3rem; }
+
+        .category-nav a {
+            display: block;
+            font-size: 1.08rem;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .category-nav a:hover,
+        .category-nav .active {
+            color: var(--orange);
+        }
+
+        .category-nav .active {
+            font-weight: 600;
+            border-left: 3px solid var(--orange);
+            padding-left: 0.9rem;
+        }
+
+        .articles {
+            padding-bottom: 5rem;
+        }
+
+        .article-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2.8rem;
+            margin-bottom: 5.5rem;
+            transition: all 1.0s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .article-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .article-item:hover {
+            transform: translateY(-6px);
+        }
+
+        .article-img-wrapper {
+            overflow: hidden;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+        }
+
+        .article-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .article-item:hover .article-img-wrapper img {
+            transform: scale(1.06);
+        }
+
+        .article-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .article-title {
+            font-size: 1.8rem;
+            line-height: 1.3;
+            margin-bottom: 0.9rem;
+        }
+
+        .article-item:hover .article-title {
+            color: var(--orange);
+        }
+
+        .article-date {
+            font-size: 0.98rem;
+            color: var(--gray);
+            margin-bottom: 0.7rem;
+        }
+
+        .article-desc {
+            font-size: 1.03rem;
+            line-height: 1.65;
+            color: #444;
+            margin-bottom: 1.3rem;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-size: 0.82rem;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid #aaa;
+            border-radius: 2rem;
+            color: #555;
+        }
+
+        /* Contact Modal */
+        .contact-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .contact-modal.active {
+            display: flex;
+            pointer-events: auto;
+        }
+
+        .contact-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .contact-modal.active .contact-overlay {
+            opacity: 1;
+        }
+
+        .contact-card {
+            position: relative;
+            width: min(90%, 440px);
+            background: rgba(246,242,229,0.97);
+            backdrop-filter: blur(14px);
+            border-radius: 20px;
+            box-shadow: 0 20px 70px rgba(0,0,0,0.22);
+            padding: 2.8rem 2.2rem 3rem;
+            border: 1px solid rgba(178,1,85,0.1);
+            transform: scale(0.7);
+            opacity: 0;
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .contact-modal.active .contact-card {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .contact-close {
+            position: absolute;
+            top: 18px; right: 22px;
+            background: none;
+            border: none;
+            font-size: 38px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .contact-close:hover { color: var(--orange); }
+
+        .contact-title {
+            font-size: 2rem;
+            color: var(--purple);
+            margin-bottom: 0.3em;
+            font-weight: 500;
+        }
+
+        .contact-subtitle {
+            font-size: 0.98rem;
+            color: var(--green);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            opacity: 0.85;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            color: #333;
+        }
+
+        .contact-label {
+            min-width: 80px;
+            font-weight: 600;
+            color: var(--orange);
+            text-align: right;
+        }
+
+        /* Back to top */
+        #toTop {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(246,242,229,0.93);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(178,1,85,0.12);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+            color: var(--purple);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 90;
+        }
+
+        #toTop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #toTop:hover {
+            background: rgba(223,101,54,0.14);
+            color: var(--orange);
+            transform: translateY(-4px);
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.88rem;
+            padding: 3rem 1rem 4rem;
+            color: #555;
+            opacity: 0.75;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .mobile-nav { display: block; }
+            .category-nav { display: none; }
+            .sidebar { grid-template-columns: 1fr; }
+            main { 
+                padding-top: calc(var(--header-height) + 54px);  /* header + mobile nav */
+            }
+        }
+
+        @media (max-width: 768px) {
+            main { padding-top: calc(var(--header-height) + 54px); }
+            .article-item { grid-template-columns: 1fr; gap: 1.8rem; }
+            .article-img-wrapper { height: 240px; }
+            .article-title { font-size: 1.65rem; }
+        }
+
+        @media (max-width: 480px) {
+            header { 
+                font-size: 1.45rem; 
+                padding: 0 4vw;
+            }
+            .mobile-nav { 
+                height: 48px; 
+            }
+            .mobile-nav ul { font-size: 0.9rem; }
+            .contact-card { 
+                padding: 2rem 1.6rem 2.4rem; 
+                width: min(94%, 400px); 
+            }
+            .contact-title { font-size: 1.8rem; }
+            #toTop { 
+                bottom: 20px; right: 20px; 
+                width: 48px; height: 48px; 
+                font-size: 1.3rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Jinglan Overseas Education Studio</div>
+</header>
+
+<div class="mobile-nav">
+    <ul>
+        <li><a href="file:///C:/Users/ribpi/Desktop/test/index.html">Home</a></li>
+        <li><a href="#" class="active">Industry Insights</a></li>
+        <li><a href="#offers">Offer Cases</a></li>
+        <li><a href="#" id="contactTrigger">Contact</a></li>
+    </ul>
+</div>
+
+<main>
+    <div class="sidebar">
+
+        <nav class="category-nav">
+            <ul>
+                <li><a href="file:///C:/Users/ribpi/Desktop/test/index.html">Home</a></li>
+                <li><a href="#" class="active">Industry Insights</a></li>
+                <li><a href="#offers">Offer Cases</a></li>
+                <li><a href="#" id="contactTrigger2">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="articles">
+            <div class="article-item">
+                <div class="article-img-wrapper">
+                    <img src="insights2026-02.jpg" alt="Article Image">
+                </div>
+                <div class="article-content">
+                    <div class="article-date">2026.02</div>
+                    <h2 class="article-title">Implications of the 15th Five-Year Plan</h2>
+                    <p class="article-desc">People are often unable, from birth, to clearly foresee what they wish to...</p>
+                    <div class="article-tags">
+                        <span class="tag">15th Five-Year Plan</span>
+                    </div>
+                    <a href="#" class="read-more" style="margin-top:1.4rem; color:var(--orange); font-weight:500; text-decoration:none;">Read More →</a>
+                </div>
+            </div>
+
+            <div class="article-item">
+                <div class="article-img-wrapper">
+                    <img src="insights2026-01.jpg" alt="Article Image">
+                </div>
+                <div class="article-content">
+                    <div class="article-date">2026.01</div>
+                    <h2 class="article-title">“Good” Abroad Advisor</h2>
+                    <p class="article-desc">At present, good study-abroad writers are being crowded out by inferior competition...</p>
+                    <div class="article-tags">
+                        <span class="tag">Advisor Choice</span>
+                    </div>
+                    <a href="https://jinglan-hku-maaies.my.canvasite.cn/v3" class="read-more" style="margin-top:1.4rem; color:var(--orange); font-weight:500; text-decoration:none;">Read More →</a>
+                </div>
+            </div>
+
+            <div class="article-item">
+                <div class="article-img-wrapper">
+                    <img src="insights2025-09.jpg" alt="Article Image">
+                </div>
+                <div class="article-content">
+                    <div class="article-date">2025.09</div>
+                    <h2 class="article-title">The Paradox in the Study Abroad Sector</h2>
+                    <p class="article-desc">After gaining insight within this industry, you should be able to...</p>
+                    <div class="article-tags">
+                        <span class="tag">Consultant Choice</span>
+                    </div>
+                    <a href="https://jinglan-hku-maaies.my.canvasite.cn/v2" class="read-more" style="margin-top:1.4rem; color:var(--orange); font-weight:500; text-decoration:none;">Read More →</a>
+                </div>
+            </div>
+
+            <div class="article-item">
+                <div class="article-img-wrapper">
+                    <img src="insights2025-07.jpg" alt="Article Image">
+                </div>
+                <div class="article-content">
+                    <div class="article-date">2025.07</div>
+                    <h2 class="article-title">HKU – MAAIES: A Full-Cycle Analysis</h2>
+                    <p class="article-desc">In recent years, the rapid rise of artificial intelligence has been evident...</p>
+                    <div class="article-tags">
+                        <span class="tag">HKU</span>
+                        <span class="tag">MAAIES</span>
+                    </div>
+                    <a href="https://jinglan-hku-maaies.my.canvasite.cn/" class="read-more" style="margin-top:1.4rem; color:var(--orange); font-weight:500; text-decoration:none;">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Contact Modal -->
+<div class="contact-modal" id="contactModal">
+    <div class="contact-overlay"></div>
+    <div class="contact-card">
+        <button class="contact-close">×</button>
+        <h2 class="contact-title">Contact Me</h2>
+        <div class="contact-subtitle">Jinglan Overseas Education Studio</div>
+        
+        <div class="contact-item">
+            <span class="contact-label">E-Mail</span>
+            littlepo_office@163.com
+        </div>
+        <div class="contact-item">
+            <span class="contact-label">WeChat</span>
+            PiousBelieverinLove
+        </div>
+    </div>
+</div>
+
+<!-- Back to top -->
+<div id="toTop">↑</div>
+
+<footer>
+    © 2026 Jinglan Overseas Education Studio
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const items = document.querySelectorAll(".article-item");
+        items.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add("visible");
+            }, 800 + 350 * index);
+        });
+    });
+
+    const modal = document.getElementById("contactModal");
+    const triggers = [
+        document.getElementById("contactTrigger"),
+        document.getElementById("contactTrigger2")
+    ];
+    const closeBtn = modal.querySelector(".contact-close");
+    const overlay = modal.querySelector(".contact-overlay");
+
+    function openModal() {
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+
+    triggers.forEach(trigger => {
+        if (trigger) trigger.addEventListener("click", e => {
+            e.preventDefault();
+            openModal();
+        });
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", closeModal);
+
+    const toTop = document.getElementById("toTop");
+    window.addEventListener("scroll", () => {
+        toTop.classList.toggle("show", window.scrollY > 500);
+    });
+
+    toTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+</script>
+
+</body>
+</html>
