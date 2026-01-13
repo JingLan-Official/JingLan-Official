@@ -15,7 +15,7 @@
             --gray: #555;
             --bg: #f6f2e5;
             --green: #2c6469;
-            --header-height: 54px;   /* 新增变量，方便统一调整 */
+            --header-height: 54px;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -48,11 +48,11 @@
             white-space: nowrap;
         }
 
-        /* ── Mobile top nav ── */
+        /* Mobile top nav */
         .mobile-nav {
             display: none;
             position: fixed;
-            top: var(--header-height);   /* 关键修复：紧贴 header 下方 */
+            top: var(--header-height);
             left: 0; right: 0;
             height: 54px;
             z-index: 195;
@@ -83,7 +83,7 @@
         }
 
         main {
-            padding-top: calc(var(--header-height) + 56px);  /* 默认桌面：只算 header */
+            padding-top: calc(var(--header-height) + 56px);
             display: grid;
             grid-template-columns: 1fr minmax(0, 1200px) 1fr;
         }
@@ -352,7 +352,7 @@
             .category-nav { display: none; }
             .sidebar { grid-template-columns: 1fr; }
             main { 
-                padding-top: calc(var(--header-height) + 54px);  /* header + mobile nav */
+                padding-top: calc(var(--header-height) + 54px);
             }
         }
 
@@ -361,11 +361,47 @@
             .article-item { grid-template-columns: 1fr; gap: 1.8rem; }
             .article-img-wrapper { height: 240px; }
             .article-title { font-size: 1.65rem; }
+
+            /* 手機模式：圖片顯示最上端 */
+            .article-img-wrapper img {
+                object-position: top center;
+            }
+
+            /* 手機模式：header 標題不被截斷 */
+            header {
+                font-size: 1.3rem;
+                padding: 0 4vw;
+                height: auto;
+                min-height: 54px;
+                white-space: normal;
+            }
+
+            .logo {
+                font-size: clamp(1.1rem, 4.5vw, 1.35rem);
+                line-height: 1.35;
+                white-space: normal;
+                max-width: 80vw;
+            }
+
+            .mobile-nav {
+                height: 54px;
+            }
+
+            /* 新增：第一張圖離上面遠一點 */
+            .articles {
+                padding-top: 30px;          /* 加大第一張圖與 mobile-nav 的距離，可自行調 20px~40px */
+            }
+
+            /* 新增：頁尾離最後一張圖近一點 */
+            footer {
+                padding-top: 1.8rem;        /* 從原本 3rem 減小，可調 1.2rem ~ 2.5rem */
+                padding-bottom: 3rem;
+            }
         }
 
         @media (max-width: 480px) {
             header { 
-                font-size: 1.45rem; 
+                font-size: 1.2rem; 
                 padding: 0 4vw;
             }
             .mobile-nav { 
@@ -382,6 +418,14 @@
                 width: 48px; height: 48px; 
                 font-size: 1.3rem; 
             }
+
+            /* 更小螢幕再微調間距（可選） */
+            .articles {
+                padding-top: 25px;
+            }
+            footer {
+                padding-top: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -393,7 +437,7 @@
 
 <div class="mobile-nav">
     <ul>
-        <li><a href="file:///C:/Users/ribpi/Desktop/test/index.html">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="#" class="active">Industry Insights</a></li>
         <li><a href="#offers">Offer Cases</a></li>
         <li><a href="#" id="contactTrigger">Contact</a></li>
@@ -405,7 +449,7 @@
 
         <nav class="category-nav">
             <ul>
-                <li><a href="file:///C:/Users/ribpi/Desktop/test/index.html">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="#" class="active">Industry Insights</a></li>
                 <li><a href="#offers">Offer Cases</a></li>
                 <li><a href="#" id="contactTrigger2">Contact</a></li>
