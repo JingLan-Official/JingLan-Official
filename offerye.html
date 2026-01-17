@@ -24,7 +24,6 @@ body{
   position:relative;
 }
 
-/* 品牌粉色柔光背景 */
 body::after{
   content:'';
   position:fixed;
@@ -40,8 +39,6 @@ body::after{
   z-index:-1;
 }
 
-
-/* ===== Header ===== */
 header{
   position:fixed;
   top:0;left:0;right:0;
@@ -74,7 +71,6 @@ header{
   color:var(--text);
 }
 
-/* ===== Menu ===== */
 .glass-menu{
   position:fixed;
   top:72px;
@@ -103,7 +99,6 @@ header{
 }
 .menu-list a:hover{color:var(--orange);}
 
-/* ===== Main ===== */
 main{
   height:100vh;
   display:flex;
@@ -121,7 +116,6 @@ main{
   justify-content:center;
 }
 
-/* Image */
 .offer-image{
   max-width:420px;
   max-height:90vh;
@@ -137,7 +131,6 @@ main{
   transform:none;
 }
 
-/* Text */
 .offer-text{
   max-width:480px;
   opacity:0;
@@ -171,7 +164,6 @@ main{
   font-style:italic;
 }
 
-/* ===== Nav Buttons ===== */
 .nav-btns{
   position:fixed;
   right:32px;
@@ -198,7 +190,6 @@ main{
   transform:scale(1.08);
 }
 
-/* ===== Page Indicator ===== */
 .page-indicator{
   position:fixed;
   bottom:20px;
@@ -212,7 +203,6 @@ main{
   z-index:200;
 }
 
-/* ===== Contact Card ===== */
 .contact-card{
   position:fixed;
   inset:0;
@@ -255,7 +245,6 @@ main{
   font-size:15px;
 }
 
-/* ===== Mobile ===== */
 @media(max-width:900px){
   main{
     padding-top:140px;
@@ -313,7 +302,6 @@ main{
   <button class="nav-btn" onclick="nextOffer()">↓</button>
 </div>
 
-<!-- Contact -->
 <div id="contactCard" class="contact-card">
   <div class="contact-inner">
     <div class="contact-title">Contact Me</div>
@@ -342,44 +330,108 @@ document.getElementById('contactCard').onclick=e=>{
   if(e.target.id==='contactCard') e.target.classList.remove('active');
 };
 
-const offers = Array.from({length:64},(_,i)=>({
-  img:`offer${i+1}.jpg`,
-  title:`Sample University ${i+1}`,
-  meta:`Background · GPA · Language`,
-  highlight:`Clear positioning and consistent long-term planning.`,
-  note: i%8===7 ? "Jinglan Note: Strategy-driven case." : ""
-}));
+const offers = [
+  { img: "offer1.jpg",  title: "PolyU · MSc in Business Analytics", meta: "Background · GPA · Language", highlight: "Undergraduate background: First-tier undergraduate / E-commerce / 81.33 / 6.5 / 2 work experiences", note: "" },
+  { img: "offer2.jpg",  title: "EdUHK · MSc in AI and Educational Technology", meta: "Background · GPA · Language", highlight: "Undergraduate background: Junior college to bachelor's / Computer Science and Technology / 2.72(5.0) / CET6-436 / 3 internships", note: "" },
+  { img: "offer3.jpg",  title: "KCL · MA Digital Asset and Media Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Radio and Television / 88 / 7.0 / 4 internships", note: "" },
+  { img: "offer4.jpg",  title: "LSE · MSc Human Rights and Politics", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / International Relations / 4.11(5.0) / 7.5 / 2 internships / 1 publication", note: "" },
+  { img: "offer5.jpg",  title: "HKUST · MSc in Global China Studies", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Public Administration / 3.88(5.0) / 7.0 / 3 internships", note: "" },
+  { img: "offer6.jpg",  title: "CUHK · MSSc in Corporate Communication", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Communication Studies / 3.94(5.0) / 7.0 / 3 internships / 1 publication", note: "" },
+  { img: "offer7.jpg",  title: "Lund University · Master of Laws", meta: "Background · GPA · Language", highlight: "Undergraduate background: 985 Project university / Law / 3.46(4.0) / 7.0 / 2 internships / 2 publications", note: "" },
+  { img: "offer8.jpg",  title: "USYD · Master of Film and Screen Arts", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Visual Communication / 82.62 / 6.5 / 2 years work experience / Including portfolio", note: "" },
+  { img: "offer9.jpg",  title: "UNSW · Master of Information Technology", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Computer Science / 85.2 / 6.5 / 2 internships", note: "" },
+  { img: "offer10.jpg", title: "UQ · Master of Computer Science", meta: "Background · GPA · Language", highlight: "Undergraduate background: 4+0 program / Information Technology / 5.0(7.0) / 1 internship", note: "" },
+  { img: "offer11.jpg", title: "University of Bristol · MA Digital Media Innovation", meta: "Background · GPA · Language", highlight: "Undergraduate background: Overseas undergraduate / Fashion Management / 2:1 / 2 internships", note: "" },
+  { img: "offer12.jpg", title: "Soton · MA English Language Teaching (TESOL Studies)", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / English / 84.39 / 7.0 / 2 internships", note: "" },
+  { img: "offer13.jpg", title: "Durham University · MA Education", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Transportation Engineering / 85.9 / 6.5 / 9 years work experience", note: "" },
+  { img: "offer14.jpg", title: "UCL · MA Intercultural Communication", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Public Relations / 4.0(5.0) / 7.0 / 4 internships", note: "" },
+  { img: "offer15.jpg", title: "PolyU · MA Social Policy & Social Development", meta: "Background · GPA · Language", highlight: "Undergraduate background: Double First-Class university / Social Work / 88.81 / 6.5 / 2 internships", note: "" },
+  { img: "offer16.jpg", title: "HKU · Master of Science in Marketing", meta: "Background · GPA · Language", highlight: "Undergraduate background: Overseas undergraduate / Advertising / 91.33(S) / 7.5 / 4 internships", note: "" },
+  { img: "offer17.jpg", title: "University of Birmingham · MSc Data Science", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Information Technology / 88.2 / 6.5 / 3 internships", note: "" },
+  { img: "offer18.jpg", title: "Stockholm University · Master in Strategic Information Systems Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Economics and Finance / 81.02 / 6.5 / 3 internships", note: "" },
+  { img: "offer19.jpg", title: "University of Birmingham · MSc Economics", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / International Trade / 80.9 / 6.5 / 4 years work experience", note: "" },
+  { img: "offer20.jpg", title: "Goldsmiths, University of London · MA in Design: Expanded Practice", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Art Studies / 3.15(5.0) / 6.5 / 2 internships / Including portfolio", note: "" },
+  { img: "offer21.jpg", title: "Hong Kong Baptist University · MSocSc in Media Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Public Relations / 87.21 / 6.5 / 3 internships", note: "" },
+  { img: "offer22.jpg", title: "University of Glasgow · MSc Data Analytics for Economics and Finance", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Economic Statistics / 81.29 / 6.5 / 2 internships", note: "" },
+  { img: "offer23.jpg", title: "CityU(Dongguan) · Master in Business Information Systems (Marketing Informatics)", meta: "Background · GPA · Language", highlight: "Undergraduate background: Sino-foreign cooperative / Computer Science / 79.62 / 6.5 / 2 internships", note: "" },
+  { img: "offer24.jpg", title: "University of Sheffield · MA in Journalism", meta: "Background · GPA · Language", highlight: "Undergraduate background: Overseas undergraduate / Media Studies / 76 / 2 internships", note: "" },
+  { img: "offer25.jpg", title: "USYD · Master of Urbanism (Urban and Regional Planning)", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Environmental Design / 84.2 / 7.0 / 2 internships", note: "" },
+  { img: "offer26.jpg", title: "University of Leeds · MA Society, Culture and Media", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Social Services / 88.89 / 6.5 / 2 internships", note: "" },
+  { img: "offer27.jpg", title: "HKU · Master of Arts in the field of Museum Studies", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Cultural Industry Management / 89.78 / 7.0 / 2 internships", note: "" },
+  { img: "offer28.jpg", title: "Lingnan University · Master of Cities and Governance", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Financial Management / 3.07(5.0) / 6.5 / 2 years work experience", note: "" },
+  { img: "offer29.jpg", title: "University of Warwick · MSc Business and Finance", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Finance and Accounting / 92.69 / 7.5 / 3 research experiences", note: "" },
+  { img: "offer30.jpg", title: "MUST · Master of Arts in Foreign Language Studies", meta: "Background · GPA · Language", highlight: "Undergraduate background: Private undergraduate / English / 85 / 6.0 / 3 internships", note: "" },
+  { img: "offer31.jpg", title: "CityU · MA Applied Social Sciences", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Communication and Journalism / 3.82(5.0) / 6.5 / 3 internships", note: "" },
+  { img: "offer32.jpg", title: "HKU · Master of Global Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Public Administration / 3.68(5.0) / 7.5 / 3 internships", note: "" },
+  { img: "offer33.jpg", title: "EdUHK · Master of Arts in Chinese Studies (Language Education)", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Chinese Language and Literature / 79.88 / No language score / 4 years work experience", note: "" },
+  { img: "offer34.jpg", title: "KCL · MSc Finance Analytics", meta: "Background · GPA · Language", highlight: "Undergraduate background: Double First-Class university / Finance and Accounting / 91.93 / 7.0 / 4 internships", note: "" },
+  { img: "offer35.jpg", title: "Manchester Uni · MSc Quantitative Finance", meta: "Background · GPA · Language", highlight: "Undergraduate background: Double First-Class university / Finance and Accounting / 91.93 / 7.0 / 4 internships", note: "" },
+  { img: "offer36.jpg", title: "HSU · MSc Digital Innovation and Technology Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: Overseas undergraduate / Marketing / 4.1(7.0) / 1 internship", note: "" },
+  { img: "offer37.jpg", title: "UQ · Master of Business", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / 83.2 / Economics / 7.0 / 2 internships", note: "" },
+  { img: "offer38.jpg", title: "HKU · Bachelor of Psychology", meta: "Background · GPA · Language", highlight: "Undergraduate background: International high school / Other details not disclosed", note: "" },
+  { img: "offer39.jpg", title: "NTU · Master of Media and Communication", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Communication Studies / 4.69(5.0) / 7.0 / 2 internships", note: "" },
+  { img: "offer40.jpg", title: "University of Leeds · MA Childhood Studies", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Primary Education / 85.93 / 6.5 / 2 internships", note: "" },
+  { img: "offer41.jpg", title: "Lingnan University · MSc Environmental, Social, and Governance Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / International Relations / 78.43 / CET:431 / 2 internships", note: "" },
+  { img: "offer42.jpg", title: "Monash University · Master of Advanced Finance", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Accounting / 82.03 / 6.5 / 3 internships", note: "" },
+  { img: "offer43.jpg", title: "ANU · Master of Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Public Administration / 87.6 / 7.0 / 4 internships", note: "" },
+  { img: "offer44.jpg", title: "University of Southampton · MA Fashion Marketing and Branding", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Textile Design / 89.9 / 6.5 / 3 internships", note: "" },
+  { img: "offer45.jpg", title: "HKBU · MSc Personal Health Management (Chinese Medicine)", meta: "Background · GPA · Language", highlight: "Undergraduate background: Double First-Class university / Health Services and Management / 3.05(5.0) / CET6-531 / 2 internships", note: "" },
+  { img: "offer46.jpg", title: "CityU · MSc Health Sciences and Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: Double First-Class university / Health Services and Management / 3.05(5.0) / CET6-531 / 2 internships", note: "" },
+  { img: "offer47.jpg", title: "UQ · Master of Writing, Editing and Publishing", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Cultural Studies / 81.9 / 7.0 / 2 internships", note: "" },
+  { img: "offer48.jpg", title: "HKMU · Master of Arts in Creative Writing", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Drama, Film and Television Literature / 4.16(5.0) / No language score / 6 years work experience", note: "" },
+  { img: "offer49.jpg", title: "NUS · MA Arts and Cultural Entrepreneurship", meta: "Background · GPA · Language", highlight: "Undergraduate background: 985 Project university / Creative Industry Management / 3.79(4.0) / 7.5 / 4 internships / 2 provincial competitions", note: "" },
+  { img: "offer50.jpg", title: "Manchester Uni · MSc International Fashion Retailing (Entrepreneurship and Innovation)", meta: "Background · GPA · Language", highlight: "Undergraduate background: Overseas undergraduate / Marketing / 3.73(4.0) / 3 internships", note: "" },
+  { img: "offer51.jpg", title: "HKU · MSocSc Media, Culture and Creative Cities", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Advertising / 3.78(4.0) / 7.0 / 3 internships", note: "" },
+  { img: "offer52.jpg", title: "CUHK · Master of Chinese Medicine", meta: "Background · GPA · Language", highlight: "Undergraduate background: PolyU master's / Hotel Management / 3.48(4.0) / 2 work experiences + Self-study TCM certificate", note: "" },
+  { img: "offer53.jpg", title: "PolyU · Master of Science in ESG and Sustainability", meta: "Background · GPA · Language", highlight: "Undergraduate background: 2+2 program / Accounting and Finance / 84.11 / 7.0 / 3 internships", note: "" },
+  { img: "offer54.jpg", title: "Edinburgh Uni · MSc Advanced Technology for Financial Computing", meta: "Background · GPA · Language", highlight: "Undergraduate background: 211 Project university / Accounting / 86.9 / 7.0 / 2 internships / 1 national finance award", note: "" },
+  { img: "offer55.jpg", title: "ANU · Master of Applied Economics", meta: "Background · GPA · Language", highlight: "Undergraduate background: Sino-foreign cooperative / 71.28 / Computer Science / 6.0 / 2 internships", note: "" },
+  { img: "offer56.jpg", title: "HKU · Bachelor of Finance in Asset Management and Private Banking", meta: "Background · GPA · Language", highlight: "Undergraduate background: Hong Kong high school / Other details not disclosed", note: "" },
+  { img: "offer57.jpg", title: "CUHK · Master of Arts in Intercultural Studies", meta: "Background · GPA · Language", highlight: "Undergraduate background: 985 Project university / Journalism / 3.4(4.0) / 6.5 / 2 internships", note: "" },
+  { img: "offer58.jpg", title: "Aarhus University · Master of Arts in Cultural Studies", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Cultural Industry Management / 87.9 / 6.0 / 3 internships", note: "" },
+  { img: "offer59.jpg", title: "Durham University · Master of Science in Marketing", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / E-commerce / 3.48(4.0) / 3 internships", note: "" },
+  { img: "offer60.jpg", title: "CUHK · MA in Social Service Management", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Advertising / 3.6(4.0) / 6.5 / 3 internships", note: "" },
+  { img: "offer61.jpg", title: "HKBU · Master of Arts in Chinese Literature, Language and Culture", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 first-tier / Media and Communication / 82.63 / No language score / 2 internships", note: "" },
+  { img: "offer62.jpg", title: "Sheffield Uni · MSc Strategic Marketing and Branding", meta: "Background · GPA · Language", highlight: "Undergraduate background: Overseas undergraduate / Digital Marketing and Business Communication / 4.2(7.0) / 4 internships", note: "" },
+  { img: "offer63.jpg", title: "NUS · Master of International Affairs", meta: "Background · GPA · Language", highlight: "Undergraduate background: 985 Project university / International Relations / 3.8(4.0) / 7.5 / 4 internships / 1 research publication", note: "" },
+  { img: "offer64.jpg", title: "HKBU · Master of Social Sciences in Counselling", meta: "Background · GPA · Language", highlight: "Undergraduate background: Non-985/211 second-tier / Applied Psychology / 88.13 / 6.0 / 3 internships", note: "Jinglan Note: Strategy-driven case." }
+];
 
-let current=0,timer;
+let current = 0, timer;
 
-function render(){
-  const o=offers[current];
-  const img=document.getElementById('offerImg');
-  const text=document.getElementById('offerText');
+function render() {
+  const o = offers[current];
+  const img = document.getElementById('offerImg');
+  const text = document.getElementById('offerText');
+  
   img.classList.remove('active');
   text.classList.remove('active');
-  setTimeout(()=>{
-    img.src=o.img;
-    text.innerHTML=`
+  
+  setTimeout(() => {
+    img.src = o.img;
+    text.innerHTML = `
       <div class="offer-title">${o.title}</div>
       <div class="offer-meta">${o.meta}</div>
       <div class="offer-highlight">${o.highlight}</div>
-      ${o.note?`<div class="jinglan-note">${o.note}</div>`:''}
+      ${o.note ? `<div class="jinglan-note">${o.note}</div>` : ''}
     `;
-    document.getElementById('pageNum').textContent=`${current+1} / ${offers.length}`;
+    document.getElementById('pageNum').textContent = `${current+1} / ${offers.length}`;
     img.classList.add('active');
     text.classList.add('active');
-  },260);
+  }, 260);
 }
 
-function nextOffer(){current=(current+1)%offers.length;render();}
-function prevOffer(){current=(current-1+offers.length)%offers.length;render();}
-function auto(){timer=setInterval(nextOffer,3000);}
-function stop(){clearInterval(timer);}
+function nextOffer() { current = (current + 1) % offers.length; render(); }
+function prevOffer() { current = (current - 1 + offers.length) % offers.length; render(); }
 
-render(); auto();
-document.querySelector('main').addEventListener('mouseenter',stop);
-document.querySelector('main').addEventListener('mouseleave',auto);
+function auto() { timer = setInterval(nextOffer, 3000); }
+function stop() { clearInterval(timer); }
+
+render(); 
+auto();
+
+document.querySelector('main').addEventListener('mouseenter', stop);
+document.querySelector('main').addEventListener('mouseleave', auto);
 </script>
 
 </body>
