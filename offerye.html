@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offer Gallery | Jinglan Overseas Education Studio</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f6f2e5;
+  --text:#3e3832;
+  --purple:#b20155;
+  --orange:#df6536;
+  --gray-line:rgba(208,201,192,0.6);
+}
+
+body{
+  font-family:Georgia,serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
+  position:relative;
+}
+
+/* 品牌粉色柔光背景 */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% 92%,
+      rgba(178,1,85,0.18),
+      rgba(178,1,85,0.06) 45%,
+      transparent 75%
+    );
+  z-index:-1;
+}
+
+
+/* ===== Header ===== */
+header{
+  position:fixed;
+  top:0;left:0;right:0;
+  padding:16px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(246,242,229,0.94);
+  backdrop-filter:blur(10px);
+  z-index:300;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:600;
+  line-height:1.15;
+}
+.logo-line{
+  height:1px;
+  background:var(--gray-line);
+  margin-top:6px;
+  max-width:240px;
+}
+
+.burger-btn{
+  background:none;
+  border:none;
+  font-size:26px;
+  cursor:pointer;
+  color:var(--text);
+}
+
+/* ===== Menu ===== */
+.glass-menu{
+  position:fixed;
+  top:72px;
+  right:20px;
+  background:rgba(255,255,255,0.78);
+  backdrop-filter:blur(18px);
+  border-radius:16px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.14);
+  opacity:0;
+  transform:translateY(-10px) scale(.95);
+  pointer-events:none;
+  transition:.35s;
+  z-index:1000;
+}
+.glass-menu.active{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+}
+.menu-list{list-style:none;}
+.menu-list li{padding:12px 28px;}
+.menu-list a{
+  text-decoration:none;
+  color:var(--text);
+  font-size:16px;
+}
+.menu-list a:hover{color:var(--orange);}
+
+/* ===== Main ===== */
+main{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:110px 20px 90px;
+}
+
+.card-container{
+  display:flex;
+  gap:48px;
+  max-width:1100px;
+  width:100%;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Image */
+.offer-image{
+  max-width:420px;
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:16px;
+  box-shadow:0 14px 36px rgba(0,0,0,0.12);
+  opacity:0;
+  transform:translateY(36px);
+  transition:.7s;
+}
+.offer-image.active{
+  opacity:1;
+  transform:none;
+}
+
+/* Text */
+.offer-text{
+  max-width:480px;
+  opacity:0;
+  transform:translateY(24px);
+  transition:.7s .15s;
+}
+.offer-text.active{
+  opacity:1;
+  transform:none;
+}
+.offer-title{
+  font-size:clamp(24px,4vw,32px);
+  color:var(--purple);
+  margin-bottom:14px;
+}
+.offer-meta{
+  font-size:14px;
+  color:#6b645e;
+  margin-bottom:14px;
+}
+.offer-highlight{
+  font-size:15px;
+  line-height:1.7;
+}
+.jinglan-note{
+  margin-top:26px;
+  padding-left:14px;
+  border-left:2px solid rgba(178,1,85,.4);
+  font-size:14px;
+  color:#6b645e;
+  font-style:italic;
+}
+
+/* ===== Nav Buttons ===== */
+.nav-btns{
+  position:fixed;
+  right:32px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:28px;
+  z-index:200;
+}
+.nav-btn{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  border:none;
+  background:var(--purple);
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+  transition:.3s;
+}
+.nav-btn:hover{
+  background:var(--orange);
+  transform:scale(1.08);
+}
+
+/* ===== Page Indicator ===== */
+.page-indicator{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:15px;
+  padding:6px 18px;
+  border-radius:30px;
+  background:rgba(255,255,255,.65);
+  backdrop-filter:blur(8px);
+  z-index:200;
+}
+
+/* ===== Contact Card ===== */
+.contact-card{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.25);
+  backdrop-filter:blur(4px);
+  opacity:0;
+  pointer-events:none;
+  transition:.35s;
+  z-index:1500;
+}
+.contact-card.active{
+  opacity:1;
+  pointer-events:auto;
+}
+.contact-inner{
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(18px);
+  border-radius:20px;
+  padding:36px 42px;
+  min-width:280px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+.contact-title{
+  font-size:20px;
+  color:var(--purple);
+  margin-bottom:22px;
+}
+.contact-item{
+  margin-bottom:16px;
+}
+.contact-item .label{
+  display:block;
+  font-size:13px;
+  color:#6b645e;
+}
+.contact-item .value{
+  font-size:15px;
+}
+
+/* ===== Mobile ===== */
+@media(max-width:900px){
+  main{
+    padding-top:140px;
+    padding-bottom:90px;
+  }
+  .card-container{
+    flex-direction:column;
+    gap:28px;
+  }
+  .offer-image{
+    max-width:90%;
+    box-shadow:none;
+  }
+  .logo{font-size:20px;}
+  .nav-btns{right:16px;}
+  .nav-btn{
+    width:40px;
+    height:40px;
+    font-size:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    Jinglan Overseas<br>Education Studio
+    <div class="logo-line"></div>
+  </div>
+  <button class="burger-btn" onclick="toggleMenu()">☰</button>
+</header>
+
+<div id="glassMenu" class="glass-menu">
+  <ul class="menu-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="wenzhangye.html">Industry Insights</a></li>
+    <li><a href="javascript:void(0)" onclick="toggleContact()">Contact Me</a></li>
+  </ul>
+</div>
+
+<main>
+  <div class="card-container">
+    <img id="offerImg" class="offer-image">
+    <div id="offerText" class="offer-text"></div>
+  </div>
+</main>
+
+<div class="page-indicator" id="pageNum"></div>
+
+<div class="nav-btns">
+  <button class="nav-btn" onclick="prevOffer()">↑</button>
+  <button class="nav-btn" onclick="nextOffer()">↓</button>
+</div>
+
+<!-- Contact -->
+<div id="contactCard" class="contact-card">
+  <div class="contact-inner">
+    <div class="contact-title">Contact Me</div>
+    <div class="contact-item">
+      <span class="label">E-Mail</span>
+      <span class="value">littlepo_office@163.com</span>
+    </div>
+    <div class="contact-item">
+      <span class="label">WeChat</span>
+      <span class="value">PiousBelieverinLove</span>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleMenu(){
+  document.getElementById('glassMenu').classList.toggle('active');
+}
+
+function toggleContact(){
+  document.getElementById('contactCard').classList.toggle('active');
+  document.getElementById('glassMenu').classList.remove('active');
+}
+
+document.getElementById('contactCard').onclick=e=>{
+  if(e.target.id==='contactCard') e.target.classList.remove('active');
+};
+
+const offers = Array.from({length:64},(_,i)=>({
+  img:`offer${i+1}.jpg`,
+  title:`Sample University ${i+1}`,
+  meta:`Background · GPA · Language`,
+  highlight:`Clear positioning and consistent long-term planning.`,
+  note: i%8===7 ? "Jinglan Note: Strategy-driven case." : ""
+}));
+
+let current=0,timer;
+
+function render(){
+  const o=offers[current];
+  const img=document.getElementById('offerImg');
+  const text=document.getElementById('offerText');
+  img.classList.remove('active');
+  text.classList.remove('active');
+  setTimeout(()=>{
+    img.src=o.img;
+    text.innerHTML=`
+      <div class="offer-title">${o.title}</div>
+      <div class="offer-meta">${o.meta}</div>
+      <div class="offer-highlight">${o.highlight}</div>
+      ${o.note?`<div class="jinglan-note">${o.note}</div>`:''}
+    `;
+    document.getElementById('pageNum').textContent=`${current+1} / ${offers.length}`;
+    img.classList.add('active');
+    text.classList.add('active');
+  },260);
+}
+
+function nextOffer(){current=(current+1)%offers.length;render();}
+function prevOffer(){current=(current-1+offers.length)%offers.length;render();}
+function auto(){timer=setInterval(nextOffer,3000);}
+function stop(){clearInterval(timer);}
+
+render(); auto();
+document.querySelector('main').addEventListener('mouseenter',stop);
+document.querySelector('main').addEventListener('mouseleave',auto);
+</script>
+
+</body>
+</html>
