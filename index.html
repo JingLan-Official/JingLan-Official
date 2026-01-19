@@ -114,15 +114,13 @@ nav a:hover{color:var(--orange);}
   }
   .insights-dates {
     flex-direction: row;
-    justify-content: flex-start;          /* 改成从左开始对齐，而不是居中 */
+    justify-content: flex-start;
     gap: 40px;
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding: 0 10px 0 20px;               /* 左边多给一点空间，避免最左被切 */
-    margin-left: -10px;                   /* 轻微负左边距，拉回来一点 */
+    padding: 0 10px 0 20px;
+    margin-left: -10px;
     -webkit-overflow-scrolling: touch;
-    
-    /* 隐藏滚动条 */
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -130,19 +128,19 @@ nav a:hover{color:var(--orange);}
     display: none;
   }
   .insights-dates .date-item:first-child {
-    margin-left: 10px;                    /* 给第一个元素额外左边距，确保完整显示 */
+    margin-left: 10px;
   }
   .insights-images {
     height: 360px;
     margin-left: 0;
   }
 }
-@media (max-width:768px){#insights{padding:80px 16px 100px;}}
+@media (max-width:768px){#insights{padding:80px 16px 50px;}}
 @media (max-width:680px){.insights-images{height:280px;}.text-item h3{font-size:19px;}.text-item p{font-size:15.2px;}}
 
 /* Offers */
 #offers {padding:120px 16px 140px;overflow:hidden;position:relative;}
-.offers-inner {max-width:1200px;margin:0 auto;text-align:center;}
+.offers-inner {max-width:1200px;margin:0 auto;text-align:center;position:relative;}
 .offers-meta {font-size:14px;letter-spacing:0.25em;opacity:0.6;margin-bottom:20px;}
 .offers-title {font-size:clamp(38px,7.5vw,72px);font-weight:400;line-height:1.1;margin-bottom:24px;color:var(--purple);}
 .offers-subtitle {font-size:15px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.7;}
@@ -163,42 +161,67 @@ nav a:hover{color:var(--orange);}
 
 .offers-cards:hover .card-left {transform:translate(calc(-50% - 220px), calc(-50% - 10px)) rotate(0deg) scale(1.04);background-color:#ffebee !important;}
 .offers-cards:hover .card-right {transform:translate(calc(-50% + 220px), calc(-50% + 10px)) rotate(0deg) scale(1.04);background-color:#e3f2fd !important;}
+
+/* 手机模式：轻度叠放 + 动态动画（方案1） */
 @media (max-width: 768px) {
   #insights {
-    padding: 80px 16px 50px;     /* 底部缩小到50px，让下面模块靠近 */
+    padding: 80px 16px 50px;
   }
 
   #offers {
-    padding: 70px 16px 100px;    /* 上方只留30px，拉近与上面的距离 */
+    padding: 30px 16px 100px;
   }
 
   .offers-cards {
-    height: auto;
-    margin-top: 60px;            /* 原60px → 缩小到40px，进一步减小上方空白 */
-    flex-direction: column;
-    gap: 40px;
+    height: 420px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    position: relative;
+    perspective: 800px;
   }
 
   .offer-card {
-    position: relative;
-    width: 82%;
-    max-width: 320px;
-    height: 320px;
-    transform: none !important;
-    left: auto;
-    top: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 78%;
+    max-width: 300px;
+    height: 380px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #ddd;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    transition: transform 0.8s cubic-bezier(0.34, 0.16, 0.3, 1),
+                box-shadow 0.8s ease,
+                filter 0.8s ease;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+
+  .card-left {
+    transform: translate(calc(-50% - 30px), -50%) rotate(-6deg);
+    z-index: 1;
+  }
+
+  .card-right {
+    transform: translate(calc(-50% + 30px), -50%) rotate(6deg);
+    z-index: 2;
   }
 
   .offers-cards:hover .card-left,
-  .offers-cards:hover .card-right {
-    transform: none !important;
-    background-color: #ddd !important;
+  .offer-card:active .card-left {
+    transform: translate(calc(-50% - 60px), -50%) rotate(-2deg) scale(1.05);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+    filter: brightness(0.92);
   }
 
-  /* 额外保险：防止两个 section 之间有意外间距 */
-  #insights + #offers {
-    margin-top: -20px;           /* 轻微负值拉近（可调 -10px ~ -30px） */
+  .offers-cards:hover .card-right,
+  .offer-card:active .card-right {
+    transform: translate(calc(-50% + 60px), -50%) rotate(2deg) scale(1.05);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+    filter: brightness(0.92);
   }
 }
 
@@ -409,7 +432,7 @@ const scrollbarWidth = (() => {
 })();
 document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
 
-// Canvas 雨 + 草 + 花动画（完整恢复）
+// Canvas 雨 + 草 + 花动画
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let W, H;
@@ -444,7 +467,43 @@ window.addEventListener("scroll", () => {
   about.classList.toggle("fade-out", y > 1400);
 });
 
-// Modal content - 完整恢复
+// Industry Insights 切换逻辑（点击 + 自动）
+const INSIGHTS_DURATION = 6000;
+let currentIndex = 0;
+const dates = document.querySelectorAll('#insights .date-item');
+const imgs = document.querySelectorAll('#insights .insight-img');
+const texts = document.querySelectorAll('#insights .text-item');
+
+function updateInsight(idx) {
+  currentIndex = idx;
+  dates.forEach((d,i) => d.classList.toggle('active', i===idx));
+  imgs.forEach((img,i) => img.classList.toggle('active', i===idx));
+  texts.forEach((t,i) => t.classList.toggle('active', i===idx));
+}
+
+// 自动轮播
+let timer = setInterval(() => {
+  currentIndex = (currentIndex + 1) % 4;
+  updateInsight(currentIndex);
+}, INSIGHTS_DURATION);
+
+// 点击切换
+dates.forEach(d => {
+  d.addEventListener('click', () => {
+    clearInterval(timer);
+    const idx = +d.dataset.index;
+    updateInsight(idx);
+    timer = setInterval(() => {
+      currentIndex = (currentIndex + 1) % 4;
+      updateInsight(currentIndex);
+    }, INSIGHTS_DURATION);
+  });
+});
+
+// 初始化
+updateInsight(0);
+
+// Modal content
 const SERVICE_CONTENT = {
   school:`<h2>School Selection</h2><div class="service-subtitle">Positioning before application</div><div class="service-section"><h3>Service Procedure</h3><ul><li>Confirm application areas & number of schools</li><li>Payment</li><li>Fill personal info in shared doc (schools applied, GPA, internship, awards, etc.)</li><li>Compare with past students' backgrounds for each target school & produce comparison table</li><li>Student reviews and confirms the proposed list</li><li>Follow-up guidance & adjustment if needed</li></ul></div><div class="service-section"><h3>Price</h3><div class="price-highlight">¥ 200 per major</div></div><div class="service-section"><h3>Sample Case</h3><p>Example of previous students' school selection comparison tables:</p><div class="sample-placeholder"><img src="sample_school_selection_table.jpg" alt="School Selection Comparison Table Example"></div></div>`,
 
