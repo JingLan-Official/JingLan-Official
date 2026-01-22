@@ -22,6 +22,7 @@ body{
   height:100vh;
   overflow:hidden;
   position:relative;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="6" fill="%23c1d7ae" opacity="0.7"/><circle cx="16" cy="16" r="3" fill="%237fa99b"/></svg>') 16 16, auto;  /* ← 新增：和 index.html 一样的自定义光标 */
 }
 
 body::after{
@@ -49,6 +50,17 @@ header{
   background:rgba(246,242,229,0.94);
   backdrop-filter:blur(10px);
   z-index:300;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: opacity 0.25s;
+}
+
+.logo-link:hover {
+  opacity: 0.82;
 }
 
 .logo{
@@ -272,10 +284,12 @@ main{
 <body>
 
 <header>
-  <div class="logo">
-    Jinglan Overseas<br>Education Studio
-    <div class="logo-line"></div>
-  </div>
+  <a href="index.html" class="logo-link">
+    <div class="logo">
+      Jinglan Overseas<br>Education Studio
+      <div class="logo-line"></div>
+    </div>
+  </a>
   <button class="burger-btn" onclick="toggleMenu()">☰</button>
 </header>
 
@@ -317,19 +331,6 @@ main{
 </div>
 
 <script>
-function toggleMenu(){
-  document.getElementById('glassMenu').classList.toggle('active');
-}
-
-function toggleContact(){
-  document.getElementById('contactCard').classList.toggle('active');
-  document.getElementById('glassMenu').classList.remove('active');
-}
-
-document.getElementById('contactCard').onclick=e=>{
-  if(e.target.id==='contactCard') e.target.classList.remove('active');
-};
-
 const offers = [
   { img: "offer1.jpg",  title: "PolyU · MSc in Business Analytics", meta: "Background · GPA · Language", highlight: "Non-985/211 first-tier / E-commerce / 81.33 / 6.5 / 2 work experiences", note: "" },
   { img: "offer2.jpg",  title: "EdUHK · MSc in AI and Educational Technology", meta: "Background · GPA · Language", highlight: " Junior college to bachelor's / Computer Science and Technology / 2.72(5.0) / CET6-436 / 3 internships", note: "" },
@@ -397,7 +398,9 @@ const offers = [
   { img: "offer64.jpg", title: "HKBU · Master of Social Sciences in Counselling", meta: "Background · GPA · Language", highlight: "Non-985/211 second-tier / Applied Psychology / 88.13 / 6.0 / 3 internships", note: "Jinglan Note: Strategy-driven case." }
 ];
 
-let current = 0, timer;
+let current = 0;
+let timer;
+let wheelEnabled = true;
 
 function render() {
   const o = offers[current];
@@ -421,17 +424,62 @@ function render() {
   }, 260);
 }
 
-function nextOffer() { current = (current + 1) % offers.length; render(); }
-function prevOffer() { current = (current - 1 + offers.length) % offers.length; render(); }
+function nextOffer() {
+  current = (current + 1) % offers.length;
+  render();
+}
 
-function auto() { timer = setInterval(nextOffer, 3000); }
-function stop() { clearInterval(timer); }
+function prevOffer() {
+  current = (current - 1 + offers.length) % offers.length;
+  render();
+}
 
-render(); 
+function auto() {
+  timer = setInterval(nextOffer, 6000);  // ← 这里改秒数，例如 8000 = 8秒
+}
+
+function stop() {
+  clearInterval(timer);
+}
+
+render();
 auto();
 
 document.querySelector('main').addEventListener('mouseenter', stop);
 document.querySelector('main').addEventListener('mouseleave', auto);
+
+// 鼠标滚轮翻页
+document.addEventListener('wheel', (e) => {
+  if (!wheelEnabled) return;
+
+  const delta = e.deltaY;
+  if (Math.abs(delta) < 50) return;
+
+  wheelEnabled = false;
+  setTimeout(() => { wheelEnabled = true; }, 800);
+
+  if (delta > 0) {
+    nextOffer();
+  } else if (delta < 0) {
+    prevOffer();
+  }
+
+  e.preventDefault();
+}, { passive: false });
+
+// 菜单 & 联系弹窗
+function toggleMenu(){
+  document.getElementById('glassMenu').classList.toggle('active');
+}
+
+function toggleContact(){
+  document.getElementById('contactCard').classList.toggle('active');
+  document.getElementById('glassMenu').classList.remove('active');
+}
+
+document.getElementById('contactCard').onclick = e => {
+  if (e.target.id === 'contactCard') e.target.classList.remove('active');
+};
 </script>
 
 </body>
