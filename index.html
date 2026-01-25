@@ -138,6 +138,65 @@ nav a:hover{color:var(--orange);}
 @media (max-width:768px){#insights{padding:80px 16px 50px;}}
 @media (max-width:680px){.insights-images{height:280px;}.text-item h3{font-size:19px;}.text-item p{font-size:15.2px;}}
 
+/* --- Partners Carousel (From logo.html) --- */
+#partners {
+  width: 100%;
+  padding: 60px 0; 
+  background: var(--bg);
+}
+.partners-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+.partners-label {
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.6;
+  line-height: 1.5;
+}
+.mobile-break { display: none; }
+.marquee-container {
+  position: relative;
+  width: 100%;
+  max-width: 1400px; 
+  margin: 0 auto;
+  overflow: hidden; 
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 100px; 
+  width: max-content; 
+  animation: scrollLeft 100s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.partner-logo {
+  height: 90px; 
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.5);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.partner-logo:hover {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.1);
+}
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+@media (max-width: 768px) {
+  .marquee-track { gap: 40px; }
+  .partner-logo { height: 60px; }
+  .partners-header { margin-bottom: 25px; }
+  .mobile-break { display: inline; }
+}
+
 /* Offers */
 #offers {padding:120px 16px 140px;overflow:hidden;position:relative;}
 .offers-inner {max-width:1200px;margin:0 auto;text-align:center;position:relative;}
@@ -162,67 +221,14 @@ nav a:hover{color:var(--orange);}
 .offers-cards:hover .card-left {transform:translate(calc(-50% - 220px), calc(-50% - 10px)) rotate(0deg) scale(1.04);background-color:#ffebee !important;}
 .offers-cards:hover .card-right {transform:translate(calc(-50% + 220px), calc(-50% + 10px)) rotate(0deg) scale(1.04);background-color:#e3f2fd !important;}
 
-/* 手机模式：轻度叠放 + 动态动画（方案1） */
 @media (max-width: 768px) {
-  #insights {
-    padding: 80px 16px 50px;
-  }
-
-  #offers {
-    padding: 30px 16px 100px;
-  }
-
-  .offers-cards {
-    height: 420px;
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    perspective: 800px;
-  }
-
-  .offer-card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 78%;
-    max-width: 300px;
-    height: 380px;
-    border-radius: 24px;
-    overflow: hidden;
-    background: #ddd;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
-    transition: transform 0.8s cubic-bezier(0.34, 0.16, 0.3, 1),
-                box-shadow 0.8s ease,
-                filter 0.8s ease;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-  }
-
-  .card-left {
-    transform: translate(calc(-50% - 30px), -50%) rotate(-6deg);
-    z-index: 1;
-  }
-
-  .card-right {
-    transform: translate(calc(-50% + 30px), -50%) rotate(6deg);
-    z-index: 2;
-  }
-
-  .offers-cards:hover .card-left,
-  .offer-card:active .card-left {
-    transform: translate(calc(-50% - 60px), -50%) rotate(-2deg) scale(1.05);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-    filter: brightness(0.92);
-  }
-
-  .offers-cards:hover .card-right,
-  .offer-card:active .card-right {
-    transform: translate(calc(-50% + 60px), -50%) rotate(2deg) scale(1.05);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-    filter: brightness(0.92);
-  }
+  #offers { padding: 30px 16px 100px; }
+  .offers-cards { height: 420px; margin-top: 40px; perspective: 800px; }
+  .offer-card { width: 78%; max-width: 300px; height: 380px; }
+  .card-left { transform: translate(calc(-50% - 30px), -50%) rotate(-6deg); z-index: 1; }
+  .card-right { transform: translate(calc(-50% + 30px), -50%) rotate(6deg); z-index: 2; }
+  .offers-cards:hover .card-left, .offer-card:active .card-left { transform: translate(calc(-50% - 60px), -50%) rotate(-2deg) scale(1.05); }
+  .offers-cards:hover .card-right, .offer-card:active .card-right { transform: translate(calc(-50% + 60px), -50%) rotate(2deg) scale(1.05); }
 }
 
 /* Modal */
@@ -375,6 +381,62 @@ footer{text-align:center;font-size:12px;padding:60px 16px 80px;opacity:.6;}
   </div>
 </section>
 
+<section id="partners">
+  <div class="partners-header">
+    <div class="partners-label">
+      Target Institutions <br class="mobile-break">& Alumni Network
+    </div>
+  </div>
+  <div class="marquee-container">
+    <div class="marquee-track">
+      <img src="big_Boston University.png" class="partner-logo" alt="Boston University">
+      <img src="big_Columbia University.png" class="partner-logo" alt="Columbia University">
+      <img src="big_Cornell University.png" class="partner-logo" alt="Cornell University">
+      <img src="big_Duke University.png" class="partner-logo" alt="Duke University">
+      <img src="big_Imperial College of London.png" class="partner-logo" alt="Imperial College">
+      <img src="big_King's College London.png" class="partner-logo" alt="KCL">
+      <img src="big_London School of Economics and Political Science.png" class="partner-logo" alt="LSE">
+      <img src="big_National University of Singapore.png" class="partner-logo" alt="NUS">
+      <img src="big_New York University.png" class="partner-logo" alt="NYU">
+      <img src="big_Stanford University.png" class="partner-logo" alt="Stanford">
+      <img src="big_University of Cambridge.png" class="partner-logo" alt="Cambridge">
+      <img src="big_University of Copenhagen.png" class="partner-logo" alt="Copenhagen">
+      <img src="big_University of Edinburgh.png" class="partner-logo" alt="Edinburgh">
+      <img src="big_University of Oxford.png" class="partner-logo" alt="Oxford">
+      <img src="big_University of Pennsylvania.png" class="partner-logo" alt="UPenn">
+      <img src="big_University of Southern California.png" class="partner-logo" alt="USC">
+      <img src="big_University of Sydney.png" class="partner-logo" alt="Sydney">
+      <img src="big_Yale University.png" class="partner-logo" alt="Yale">
+      <img src="big_The Hong Kong Polytechnic University.png" class="partner-logo" alt="PolyU">
+      <img src="big_The University of Hong Kong.png" class="partner-logo" alt="HKU">
+      <img src="big_Hong Kong University of Science and Technology.png" class="partner-logo" alt="HKUST">
+      <img src="big_The Chinese University of Hong Kong.png" class="partner-logo" alt="CHKU">
+      <img src="big_Boston University.png" class="partner-logo" alt="Boston University">
+      <img src="big_Columbia University.png" class="partner-logo" alt="Columbia University">
+      <img src="big_Cornell University.png" class="partner-logo" alt="Cornell University">
+      <img src="big_Duke University.png" class="partner-logo" alt="Duke University">
+      <img src="big_Imperial College of London.png" class="partner-logo" alt="Imperial College">
+      <img src="big_King's College London.png" class="partner-logo" alt="KCL">
+      <img src="big_London School of Economics and Political Science.png" class="partner-logo" alt="LSE">
+      <img src="big_National University of Singapore.png" class="partner-logo" alt="NUS">
+      <img src="big_New York University.png" class="partner-logo" alt="NYU">
+      <img src="big_Stanford University.png" class="partner-logo" alt="Stanford">
+      <img src="big_University of Cambridge.png" class="partner-logo" alt="Cambridge">
+      <img src="big_University of Copenhagen.png" class="partner-logo" alt="Copenhagen">
+      <img src="big_University of Edinburgh.png" class="partner-logo" alt="Edinburgh">
+      <img src="big_University of Oxford.png" class="partner-logo" alt="Oxford">
+      <img src="big_University of Pennsylvania.png" class="partner-logo" alt="UPenn">
+      <img src="big_University of Southern California.png" class="partner-logo" alt="USC">
+      <img src="big_University of Sydney.png" class="partner-logo" alt="Sydney">
+      <img src="big_Yale University.png" class="partner-logo" alt="Yale">
+      <img src="big_The Hong Kong Polytechnic University.png" class="partner-logo" alt="PolyU">
+      <img src="big_The University of Hong Kong.png" class="partner-logo" alt="HKU">
+      <img src="big_Hong Kong University of Science and Technology.png" class="partner-logo" alt="HKUST">
+      <img src="big_The Chinese University of Hong Kong.png" class="partner-logo" alt="CHKU">
+    </div>
+  </div>
+</section>
+
 <section id="offers">
   <div class="offers-inner">
     <div class="offers-meta">2022 — 2026</div>
@@ -396,7 +458,6 @@ footer{text-align:center;font-size:12px;padding:60px 16px 80px;opacity:.6;}
 
 <footer>© 2026 Jinglan Overseas Education Studio</footer>
 
-<!-- MODALS -->
 <div class="service-modal" id="serviceModal">
   <div class="service-overlay"></div>
   <div class="service-panel">
@@ -432,7 +493,7 @@ const scrollbarWidth = (() => {
 })();
 document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
 
-// Canvas 雨 + 草 + 花动画
+// Canvas 动画逻辑
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let W, H;
@@ -467,7 +528,7 @@ window.addEventListener("scroll", () => {
   about.classList.toggle("fade-out", y > 1400);
 });
 
-// Industry Insights 切换逻辑（点击 + 自动）
+// Industry Insights 切换逻辑
 const INSIGHTS_DURATION = 6000;
 let currentIndex = 0;
 const dates = document.querySelectorAll('#insights .date-item');
@@ -481,13 +542,11 @@ function updateInsight(idx) {
   texts.forEach((t,i) => t.classList.toggle('active', i===idx));
 }
 
-// 自动轮播
 let timer = setInterval(() => {
   currentIndex = (currentIndex + 1) % 4;
   updateInsight(currentIndex);
 }, INSIGHTS_DURATION);
 
-// 点击切换
 dates.forEach(d => {
   d.addEventListener('click', () => {
     clearInterval(timer);
@@ -499,20 +558,14 @@ dates.forEach(d => {
     }, INSIGHTS_DURATION);
   });
 });
-
-// 初始化
 updateInsight(0);
 
 // Modal content
 const SERVICE_CONTENT = {
   school:`<h2>School Selection</h2><div class="service-subtitle">Positioning before application</div><div class="service-section"><h3>Service Procedure</h3><ul><li>Confirm application areas & number of schools</li><li>Payment</li><li>Fill personal info in shared doc (schools applied, GPA, internship, awards, etc.)</li><li>Compare with past students' backgrounds for each target school & produce comparison table</li><li>Student reviews and confirms the proposed list</li><li>Follow-up guidance & adjustment if needed</li></ul></div><div class="service-section"><h3>Price</h3><div class="price-highlight">¥ 200 per major</div></div><div class="service-section"><h3>Sample Case</h3><p>Example of previous students' school selection comparison tables:</p><div class="sample-placeholder"><img src="sample_school_selection_table.jpg" alt="School Selection Comparison Table Example"></div></div>`,
-
   writing:`<h2>Document Writing</h2><div class="service-subtitle">Narrative is strategy</div><div class="service-section"><h3>Service Content</h3><h4>Curriculum Vitae</h4><ul><li>Enhance professional relevance, refine terminology, and quantify achievements</li><li>Unify structure and formatting; prioritize key information</li><li>Bilingual polishing (Chinese & English), ATS-friendly</li></ul><p><strong>Deliverables:</strong> Refined concept (Word/Google Docs) + Final PDF</p><h4>Personal Statement</h4><ul><li>Analyze target program course descriptions and mark essential points</li><li>One-on-one brainstorming interviews to mine material and shape a clear storyline</li><li>Differentiate your narrative and craft highlights to avoid templated text</li></ul><p><strong>Deliverables:</strong> Xmind writing logic map + Final PDF</p><h4>Reference Letter</h4><ul><li>Identify referee relationship, responsibilities and supporting evidence</li><li>Match program requirements and refresh candidate highlights</li><li>Polished wording to avoid repetition and sensitive phrasing</li></ul><p><strong>Deliverables:</strong> Writing plan (Word/Google Docs) + Final PDF</p></div><div class="service-section"><h3>Workflow & Pricing</h3><h4>Service Workflow</h4><ul><li>Confirm program</li><li>Payment</li><li>Break down program courses & projects and organize into a shared doc, highlight key points</li><li>In-depth interview & materials collection</li><li>Draft writing</li><li>Applicant requests revisions</li><li>Finalization & translation</li></ul><h4>Price Range</h4><div class="price-item">• CV: <span class="price-highlight">¥1200 /piece</span></div><div class="price-item">• PS: <span class="price-highlight">¥2.5-3k /essay</span> (for overlapping directions we can extract intersections; each additional intersection +¥500)</div><div class="price-item">• RL: <span class="price-highlight">¥800 /letter</span></div><div class="price-item">• Package: <span class="price-highlight">¥2500</span> (CV + 2 RLs)</div></div><div class="service-section"><h3>Timeline & Collaboration</h3><ul><li>Standard: 3–7 days / item (includes revisions)</li><li>Expedited: available depending on schedule</li><li>Collaboration: WeChat + Tencent Docs for real-time follow-up</li></ul></div><div class="service-section"><h3>Writing Sample</h3><p>Example of polished documents (CV / PS / RL):</p><div class="sample-placeholder"><img src="sample_writing_documents.jpg" alt="Polished Writing Samples"></div></div><div class="service-section"><h3>FAQ</h3><div class="faq-item"><div class="faq-q">1.Will my essays collide with others' submissions?</div>Never. All documents are customized 1:1 based on your real experiences — templates are never reused. I will provide the writing rationale as well.</div><div class="faq-item"><div class="faq-q">2.What are the standards for English polishing?</div>We follow academic and admissions language register to ensure grammar, diction, and coherence. References are used when necessary.</div><div class="faq-item"><div class="faq-q">3.How is privacy protected?</div>All your materials are used only for this application and will not be shared externally or used for training. Please rest assured.</div></div></div>`,
-
   submission:`<h2>Application Submission</h2><div class="service-subtitle">Execution with accountability</div><div class="service-section"><h3>Service Procedure</h3><ul><li>Confirm submission dates</li><li>Register in system</li><li>Collect & review materials</li><li>Fill online forms</li><li>Upload documents</li><li>Pay fees</li><li>Confirm & follow up (supplement school-required docs)</li><li>Review offer/con/waitlist/rejection</li><li>Accept offer or write love letter accordingly</li></ul></div><div class="service-section"><h3>Price</h3><div class="price-highlight">¥ 300-500 per major (full process supervision & follow-up)</div></div><div class="service-section"><h3>Unique Strengths</h3><ul><li>Plan personalized delivery timeline based on each school's competitiveness for higher acceptance rate</li><li>Double or triple check before submission to avoid low-level mistakes</li><li>Share account info so students can check progress anytime</li><li>Contact admission officers directly if needed (some schools) to clarify or supplement application details for higher chance of offer</li><li>Quick contingency handling during system exceptions</li></ul></div><div class="service-section"><h3>Sample Case</h3><p>Example of previous students' material collection list:</p><div class="sample-placeholder"><img src="sample_material_checklist.jpg" alt="Material Collection Checklist Example"></div></div>`,
-
   interview:`<h2>Interview Guidance</h2><div class="service-subtitle">Preparation for success</div><div class="service-section"><h3>Mock Interview</h3><ul><li>Confirm your major and interview schedule</li><li>Collect and analyze student documents and application materials</li><li>Design targeted interview question list based on previous students' real experience</li><li>Conduct mock interview practice</li><li>Provide real-time feedback and suggestions</li><li>Strengthen weak points</li><li>Analyze potential follow-up and stress questions</li><li>Summarize improvement strategies</li></ul></div><div class="service-section"><h3>Interview Set</h3><ul><li>The interview set combines Chinese and English, organizing potential questions and detailed explanations based on past successful students;</li><li>Each set is tailored to different schools and majors, allowing focused practice;</li><li>You can practice each question step by step, refer to the explanations, and optimize your expression and logic.</li></ul></div><div class="service-section"><h3>Price</h3><div class="price-item">• Mock Interview: <span class="price-highlight">¥300/h</span></div><div class="price-item">• Interview Set: <span class="price-highlight">¥1200/set</span></div></div><div class="service-section"><h3>Sample Case</h3><p>Examples from previous students' interview sets:</p><div class="sample-placeholder"><img src="sample_interview_questions.jpg" alt="Interview Question Set Example"></div></div><div class="service-section"><h3>FAQ</h3><div class="faq-item"><div class="faq-q">1.How to book a mock interview?</div>Please contact me at least 3 days in advance and provide your major and available time;</div><div class="faq-item"><div class="faq-q">2.Which majors are suitable for the interview set?</div>The interview set consists of general and major-specific questions. It can be used for most related majors;</div><div class="faq-item"><div class="faq-q">3.Is there coaching after purchasing the interview set?</div>The interview set is for self-study. Coaching requires a separate mock interview appointment.</div></div></div>`,
-
   faq:`<h2>Frequently Asked Questions</h2><div class="service-subtitle">Everything you need to know</div><div class="service-section">
     <div class="faq-item"><div class="faq-q">1. How can I contact you?</div>You may reach me via the email or WeChat provided on the homepage, and I will reply within 24 hours.</div>
     <div class="faq-item"><div class="faq-q">2. What is the service process?</div>We will first conduct an initial consultation. Once requirements are clear, a tailored plan will be designed. After confirmation and payment, I will provide full-process support.</div>
